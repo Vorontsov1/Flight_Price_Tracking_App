@@ -1,13 +1,16 @@
 import { View, Text, StyleSheet, TextInput, Button, Pressable } from "react-native";
 import { useState } from 'react';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { Feather } from "@expo/vector-icons";
 
 const SearchForm = () => {
-
   const [from, setFrom] = useState('');
-    const [to, setTo] = useState('');
+  const [to, setTo] = useState('');
+  const [departDate, setDepartDate] = useState(new Date());
+  const [returnDate, setReturnDate] = useState(new Date());  
 
   const onSearchPress = () => {
-  console.warn("searching for");
+    console.warn(from, to, departDate, returnDate);
 }
 
   return (
@@ -30,9 +33,25 @@ const SearchForm = () => {
         placeholder="To"
       />
 
+      <View style={styles.datePicker}>
+        <Feather name="calendar" size={26} color="gray" />
+        <DateTimePicker
+          value={departDate}
+          onChange={(event, date) => setDepartDate(date || new Date())}
+          minimumDate={new Date()}
+        />
+        <Text style={{fontSize: 20, color: 'gainsboro', marginLeft: 10,}}>|</Text>
+
+        <DateTimePicker
+          value={returnDate}
+          onChange={(event, date) => setReturnDate(date || new Date())}
+          minimumDate={departDate}
+        />
+      </View>
+
       <Button title="Search" onPress={onSearchPress} />
     </View>
-  );
+  );new Date()
 }
 
 export default SearchForm;
@@ -62,10 +81,19 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: 'gainsboro',
+    borderColor: "gainsboro",
     padding: 15,
     marginVertical: 5,
     borderRadius: 10,
+  },
+  datePicker: {
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "gainsboro",
+    padding: 7,
+    marginVertical: 5,
+    borderRadius: 10,
+    alignItems: "center",
   },
 });
 
