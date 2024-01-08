@@ -40,7 +40,7 @@ const SearchForm = () => {
           onChange={(event, date) => setDepartDate(date || new Date())}
           minimumDate={new Date()}
         />
-        <Text style={{fontSize: 20, color: 'gainsboro', marginLeft: 10,}}>|</Text>
+        <Text style={{fontSize: 20, color: 'gainsboro', marginLeft: 10,}}>| </Text>
 
         <DateTimePicker
           value={returnDate}
