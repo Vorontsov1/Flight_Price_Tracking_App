@@ -4,58 +4,58 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { Feather } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 
-const SearchForm = () => {
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+const SearchForm = ({ onSearch }) => {
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const [departDate, setDepartDate] = useState(new Date());
-  const [returnDate, setReturnDate] = useState(new Date());  
+  const [returnDate, setReturnDate] = useState(new Date());
 
   const onSearchPress = () => {
-    console.warn(from, to, departDate, returnDate);
-}
+    onSearch({ from, to, departDate, returnDate });
+  };
 
   return (
-      <View style={styles.card}>
-        <Text style={styles.title}>
-          Search the best prices for your next trip
+    <View style={styles.card}>
+      <Text style={styles.title}>
+        Search the best prices for your next trip
+      </Text>
+
+      <TextInput
+        value={from}
+        onChangeText={setFrom}
+        style={styles.input}
+        placeholder="From"
+      />
+
+      <TextInput
+        value={to}
+        onChangeText={setTo}
+        style={styles.input}
+        placeholder="To"
+      />
+
+      <View style={styles.datePicker}>
+        <Feather name="calendar" size={26} color="gray" />
+        <DateTimePicker
+          value={departDate}
+          onChange={(event, date) => setDepartDate(date || new Date())}
+          minimumDate={new Date()}
+        />
+        <Text style={{ fontSize: 20, color: "gainsboro", marginLeft: 10 }}>
+          |{" "}
         </Text>
 
-        <TextInput
-          value={from}
-          onChangeText={setFrom}
-          style={styles.input}
-          placeholder="From"
+        <DateTimePicker
+          value={returnDate}
+          onChange={(event, date) => setReturnDate(date || new Date())}
+          minimumDate={departDate}
         />
-
-        <TextInput
-          value={to}
-          onChangeText={setTo}
-          style={styles.input}
-          placeholder="To"
-        />
-
-        <View style={styles.datePicker}>
-          <Feather name="calendar" size={26} color="gray" />
-          <DateTimePicker
-            value={departDate}
-            onChange={(event, date) => setDepartDate(date || new Date())}
-            minimumDate={new Date()}
-          />
-          <Text style={{ fontSize: 20, color: "gainsboro", marginLeft: 10 }}>
-            |{" "}
-          </Text>
-
-          <DateTimePicker
-            value={returnDate}
-            onChange={(event, date) => setReturnDate(date || new Date())}
-            minimumDate={departDate}
-          />
-        </View>
-
-        <Button title="Search" onPress={onSearchPress} />
       </View>
+
+      <Button title="Search" onPress={onSearchPress} />
+    </View>
   );
-}
+};
 
 export default SearchForm;
 
